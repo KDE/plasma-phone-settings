@@ -1,3 +1,9 @@
+plasma-phone-settings (4) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Thu, 11 Jun 2015 01:26:13 +0200
+
 plasma-phone-settings (3) vivid; urgency=medium
 
   * Simpler kwinrc
