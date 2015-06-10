@@ -1,0 +1,12 @@
+Source: plasma-phone-settings
+Section: kde
+Priority: optional
+Maintainer: Kubuntu Developers <kubuntu-devel@lists.ubuntu.com>
+Build-Depends: debhelper (>= 9), pkg-kde-tools (>= 0.9.2ubuntu14)
+Standards-Version: 3.9.6
+
+Package: plasma-phone-settings
+Architecture: all
+Depends: kubuntu-settings-desktop, ${misc:Depends}
+Description: Settings and artwork for Plasma Phone
+ This package contains settings used by Plasma Phone.
