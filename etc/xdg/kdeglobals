@@ -1,6 +1,9 @@
 [KDE] 
 StartDragDist=40
 
+[Icons]
+Theme=breeze
+
 [General]
 BrowserApplication[$e]=!webbrowser-app
 ColorScheme=Breeze
