@@ -1,0 +1,2 @@
+[Applications]
+blacklist=cuttlefish,org.kde.plasma.themeexplorer,com.ubuntu.gallery_gallery_2.9.1.1183,org.kde.klipper,com.ubuntu.calculator_ubuntu-calculator-app_2.0.182,org.kde.phone.camera,org.kde.phone.dialer,org.kde.phone.phonebook,active-settings,ciborium,mediaplayer-app,syncmonitorhelper,com.ubuntu.weather_weather_1.1.403
