@@ -1,0 +1,133 @@
+#!/bin/bash
+# ------------------------------------------------------------------
+#
+#    Copyright (C) 2013 Canonical Ltd.
+#
+#    This program is free software; you can redistribute it and/or
+#    modify it under the terms of version 2 of the GNU General Public
+#    License published by the Free Software Foundation.
+#
+# ------------------------------------------------------------------
+
+set -e
+
+# Wrapper around aa-exec to set various click variables:
+# https://wiki.ubuntu.com/SecurityTeam/Specifications/ApplicationConfinement#Launching_applications
+
+usage() {
+    echo "`basename $0` -p <profile> <args to aa-exec> -- <command> <arg1> ..."
+}
+
+profile=""
+use_insecure_x=""
+xpos=""
+while getopts hxp: f ; do
+    case "$f" in
+        p) profile="$OPTARG";;
+        x) use_insecure_x="yes"
+           xpos=$((OPTIND-1))
+           ;;
+        h) usage; exit 0;;
+        *) usage; exit 1;;
+    esac
+done
+
+# strip -x from the list since we pass arguments straight to aa-exec
+if [ -z "$xpos" ]; then
+    if [ "$1" = "-x" ]; then
+        shift
+    fi
+else
+    set -- "${@:1:$((xpos-1))}" "${@:$((xpos+1)):$#}"
+fi
+
+if [ -z "$profile" ]; then
+    usage
+    exit 1
+fi
+
+# Perhaps there is a better way to detect this, but for now, this works
+if [ -d "/tmp/.X11-unix" ]; then
+    num_sockets=`ls -1 /tmp/.X11-unix | wc -l`
+    if [ "$num_sockets" != "0" ] && [ "$use_insecure_x" != "yes" ]; then
+        echo "Detected click app running under X! Aborting"
+    fi
+fi
+
+# gnutriplet should be updated during package build
+gnutriplet='arm-linux-gnueabihf'
+
+pkgname=`echo "$profile" | cut -d '_' -f 1`
+
+# Make sure we have sane defaults based on the XDG spec
+if [ -z "$XDG_CACHE_HOME" ]; then
+    export XDG_CACHE_HOME="$HOME/.cache"
+fi
+if [ -z "$XDG_CONFIG_HOME" ]; then
+    export XDG_CONFIG_HOME="$HOME/.config"
+fi
+if [ -z "$XDG_DATA_HOME" ]; then
+    export XDG_DATA_HOME="$HOME/.local/share"
+fi
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+    export XDG_RUNTIME_DIR="/run/user/$(id -ru)" # Ubuntu-specific
+fi
+
+# Set up various environment variables based on the click install directory
+# (click is guaranteed to be installed since click-apparmor Depends on it).
+# Also, while 'click pkgdir' should only return a path with the click package
+# name, and click package names follow Debian source package rules (see
+# (Debian policy 5.6.1), let's be extra careful and filter out any ':' in the
+# pkgdir
+pkgdir=`click pkgdir "$pkgname" | sed 's/://g'` && {
+    if [ -n "$pkgdir" ]; then
+        if [ -n "$XDG_DATA_DIRS" ]; then
+            export XDG_DATA_DIRS="$pkgdir:$XDG_DATA_DIRS"
+        else
+            export XDG_DATA_DIRS="$pkgdir:/usr/share"
+        fi
+
+        if [ -n "$PATH" ]; then
+            export PATH="$pkgdir:$PATH"
+        else
+            export PATH="$pkgdir:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        fi
+
+        if [ "$gnutriplet" != "###GNUTRIPLET###" ]; then
+            libdir="$pkgdir/lib/$gnutriplet"
+
+            # We set PATH above, but if have compiled code, also prepend
+            # $libdir/bin
+            export PATH="$libdir/bin:$PATH"
+
+            # LD_LIBRARY_PATH is searched forwards, so prepend
+            if [ -n "$LD_LIBRARY_PATH" ]; then
+                export LD_LIBRARY_PATH="$libdir:$pkgdir/lib:$LD_LIBRARY_PATH"
+            else
+                export LD_LIBRARY_PATH="$libdir:$pkgdir/lib"
+            fi
+
+            # QML2_IMPORT_PATH is search backwards, so append
+            if [ -n "$QML2_IMPORT_PATH" ]; then
+                export QML2_IMPORT_PATH="$QML2_IMPORT_PATH:$libdir"
+            else
+                export QML2_IMPORT_PATH="$libdir"
+            fi
+        fi
+    fi
+}
+
+# This may be useful to apps
+export APP_ID="$profile"
+
+# Set application isolation environment
+export UBUNTU_APPLICATION_ISOLATION=1
+export TMPDIR="$XDG_RUNTIME_DIR/confined/$pkgname"
+mkdir -p "$TMPDIR" || true
+export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/$pkgname"
+
+aa_exec="aa-exec"
+if ! which $aa_exec >/dev/null ; then
+    aa_exec="/usr/sbin/aa-exec"
+fi
+exec $aa_exec "$@"
