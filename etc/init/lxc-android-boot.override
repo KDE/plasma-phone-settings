@@ -1,0 +1,20 @@
+# lxc-android-boot - LXC Android Boot Setup
+#
+# Boot setup to map the Android specifics in Ubuntu Touch
+# This logic should be moved to the initrd once we have a working loop mounted
+# partition scheme for Touch
+
+description	"lxc android boot setup"
+
+start on filesystem
+
+script
+    # Read-only flipped model doesn't need all this
+    [ -d /android ] && exit 0
+    [ -e /lib/modules ] || ln -s /system/lib/modules /lib/modules
+    device=$(grep ^ro.product.device= /system/build.prop |sed -e 's/.*=//')
+    [ -e /lib/udev/rules.d/70-$device.rules ] || \
+	    cp /usr/lib/lxc-android-config/70-$device.rules /lib/udev/rules.d/
+    # add device specific hacks and workarounds below
+end script
+
