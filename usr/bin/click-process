@@ -1,0 +1,31 @@
+#!/bin/sh
+
+echo "Processing $1"
+pkgdir=`click pkgdir $1`
+
+echo "It is installed in $pkgdir"
+
+for i in $(ls $pkgdir/*.desktop $pkgdir/share/applications/*.desktop)
+do
+	launcher=$i
+	echo "Launcher file is $launcher"
+
+	echo "Changing few bits"
+
+	mkdir -p /tmp/clicksies
+	cd /tmp/clicksies
+
+	cp $launcher .
+
+	sed -i "/^Exec=.*/a \
+	Path=$pkgdir" `basename $launcher`
+
+	sed -i "s|^Icon=|Icon=$pkgdir\/|g" `basename $launcher`
+
+	sed -i "/^Name=.*/s/$/ \(click\)/" `basename $launcher`
+
+	cp /tmp/clicksies/*.desktop /usr/share/applications/
+
+    rm -rf /tmp/clicksies
+
+done
