@@ -17,5 +17,5 @@ fi
 
 nmcli c add con-name $SSID ifname wlan0 type wifi ssid $SSID
 nmcli c modify $SSID wifi-sec.key-mgmt wpa-psk
-nmcli c modify $SSID wifi-sec.psk $PSWD
+nmcli c modify $SSID wifi-sec.psk "$PSWD"
 nmcli c up $SSID
