@@ -1,5 +1,8 @@
+
 [audgui]
+about_win=0,1018,591,427
 filebrowser_win=0,60,1080,1710
+url_opener_win=340,851,400,128
 
 [gtkui]
 column_widths=10,275,175,10,175,175,10,100,39,10,275,275,275,10
@@ -15,10 +18,13 @@ item_count=1
 
 [skins]
 double_size=TRUE
-equalizer_x=110
-equalizer_y=491
-player_x=270
-player_y=520
-playlist_x=385
-playlist_y=375
+equalizer_x=0
+equalizer_y=783
+mainwin_font=Sans Bold 24
+mainwin_use_bitmapfont=FALSE
+player_x=194
+player_y=375
+playlist_font=Sans Bold 24
+playlist_x=530
+playlist_y=518
 skin=/usr/share/audacious/Skins/Default
