@@ -1,3 +1,0 @@
-owner /run/user/*/wayland-0 rw,
-owner /run/user/*/weston-shared-* rw,
-owner /tmp/wayland-shm-* rw,
