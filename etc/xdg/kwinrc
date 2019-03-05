@@ -18,3 +18,6 @@ NoPlugin=true
 [TouchEdges]
 Left=None
 Right=None
+
+[HWComposerOutputs][0]
+Scale=3
