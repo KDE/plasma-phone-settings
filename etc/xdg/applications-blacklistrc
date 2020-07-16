@@ -1,3 +1,2 @@
 [Applications]
-allapps=org.kde.touchtest,org.kde.koko,org.kde.peruse,firefox,org.kde.mobile.plasmasettings,org.kde.konsole,org.kde.qmlkonsole,org.kde.touchtest,org.kde.phone.camera,org.kde.kirigami2.gallery,org.kde.phone.dialer,org.kde.spacebar,org.kde.mobile.screenshot,org.kde.marble.maps
-blacklist=cuttlefish,org.kde.plasma.themeexplorer,org.kde.klipper,ciborium,syncmonitorhelper,org.kde.okular,wordview,assistant-qt5,designer-qt5,linguist-qt5,org.kde.perusecreator
+blacklist=cuttlefish,org.kde.plasma.themeexplorer,org.kde.klipper,ciborium,syncmonitorhelper,org.kde.okular,wordview,assistant-qt5,designer-qt5,linguist-qt5,org.kde.perusecreator,UserFeedbackConsole.desktop,avahi-discover.desktop,bssh.desktop,bvnc.desktop,ktelnetservice5.desktop,qv4l2.desktop,qvidcap.desktop
