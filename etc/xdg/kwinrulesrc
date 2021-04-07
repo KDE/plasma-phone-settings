@@ -1,0 +1,8 @@
+[1]
+Description=No minimum geometry
+minsize=0,0
+minsizerule=2
+types=1
+
+[General]
+count=1
