@@ -23,3 +23,6 @@ NoPlugin=true
 Left=None
 Right=None
 
+[Wayland]
+InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop
+VirtualKeyboardEnabled=true
