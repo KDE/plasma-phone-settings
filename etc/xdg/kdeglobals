@@ -6,7 +6,7 @@ Theme=breeze
 
 [General]
 BrowserApplication[$e]=!angelfish
-ColorScheme=Breeze
+ColorScheme=BreezeLight
 Name=Breeze
 XftHintStyle=
 XftSubPixel=none
