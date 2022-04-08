@@ -1,9 +1,0 @@
-[Context]
-sockets=wayland;
-devices=all;
-filesystems=host;
-
-[Environment]
-HYBRIS_EGLPLATFORM_DIR=/usr/lib/arm-linux-gnueabihf/GL/default/lib/libhybris/
-HYBRIS_LINKER_DIR=/usr/lib/arm-linux-gnueabihf/GL/default/lib/libhybris/linker
-EGL_PLATFORM=wayland
