@@ -1,3 +1,8 @@
+<!--
+- SPDX-FileCopyrightText: None
+- SPDX-License-Identifier: CC0-1.0
+-->
+
 # Plasma Mobile Configuration
 This repository contains recommended configurations for distributions shipping Plasma Mobile by default.
 

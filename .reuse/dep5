@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: plasma-mobile
+Upstream-Contact: Devin Lin <devin@kde.org>
+Source: https://invent.kde.org/plasma-mobile/plasma-phone-settings
+
+Files: *.json
+Copyright: Plasma Mobile contributors
+License: CC0-1.0
+
+ 
