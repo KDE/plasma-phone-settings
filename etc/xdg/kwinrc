@@ -1,6 +1,10 @@
 # SPDX-FileCopyrightText: None
 # SPDX-License-Identifier: CC0-1.0
 
+[Plugins]
+# Blur is far too slow for many mobile devices, don't have it enabled by default
+blurEnabled=false
+
 [Wayland]
 InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop
 VirtualKeyboardEnabled=true
