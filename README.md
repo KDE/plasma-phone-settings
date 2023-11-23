@@ -6,8 +6,8 @@
 # Plasma Mobile Configuration
 This repository contains recommended configurations for distributions shipping Plasma Mobile by default.
 
-Some important changes include:
+Most settings here were removed for Plasma 6, as Plasma Mobile now handles them through `plasma-mobile-envmanager` [here](https://invent.kde.org/plasma/plasma-mobile/-/tree/master/envmanager).
+
+Changes:
 * Locking the screen as soon as the session has been entered (ex. from SDDM autologin)
-* Setting the default look-and-feel package
-* Set the default keyboard to maliit-keyboard
-* Prevent some unneeded applications from showing in the app list
+* Default maliit config 
